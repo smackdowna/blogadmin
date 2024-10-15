@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import "./globals.css";
-import ClientProvider from "@/providers/ClientProvider";
+import Navbar from "@/Components/Navbar/Navbar";
+import Sidebar from "@/Components/Sidebar/Sidebar";
 
 export const metadata: Metadata = {
   title: "Blog Admin Panel",
@@ -14,10 +14,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <ClientProvider>
+      <body className="flex bg-gray-50">
+        <Sidebar/>
+
+        <div className="flex flex-col gap-5 w-full flex-1">
+          <Navbar/>
+        <div className="px-6 py-4">
         {children}
-        </ClientProvider>
+        </div>
+        </div>
       </body>
     </html>
   );
