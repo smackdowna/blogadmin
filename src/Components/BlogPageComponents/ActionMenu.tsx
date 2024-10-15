@@ -23,6 +23,7 @@ const ActionMenu = ({id}:{id:string}) => {
            const response = await deleteBlog(id).unwrap();
             console.log(response)
         } catch(err){
+            console.log(err)
             // err
         }
     }
