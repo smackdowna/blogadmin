@@ -2,8 +2,14 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { ICONS } from "../../../public";
+import { sidebarLinks } from "../Sidebar/Sidebar";
+import Link from "next/link";
+import { BiMenuAltLeft } from "react-icons/bi";
+
+import { usePathname } from "next/navigation";
 
 const HamburgerMenu = () => {
+  const pathname = usePathname();
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
 
   const toggleHamburgerMenu = () => {
@@ -28,13 +34,9 @@ const HamburgerMenu = () => {
   }, [isHamburgerOpen]);
 
   return (
-    <div className="relative hamburgerMenu block lg:hidden">
-      <Image
-        onClick={toggleHamburgerMenu}
-        src={ICONS.menu}
-        alt="menu-icon"
-        className="size-8 cursor-pointer"
-      />
+    <div className="relative hamburgerMenu block xl:hidden">
+        <BiMenuAltLeft onClick={toggleHamburgerMenu} className="text-3xl text-neutral-30"/>
+      
 
       {/* Background Overlay */}
       <div
@@ -46,11 +48,36 @@ const HamburgerMenu = () => {
 
       {/* Side Menu */}
       <div
-        className={`fixed inset-y-0 right-0 z-50 bg-white w-[290px] overflow-y-auto h-screen transition-all duration-300 transform ${
-          isHamburgerOpen ? "translate-x-0" : "translate-x-full"
+        className={`flex flex-col gap-[70px] p-4 fixed inset-y-0 left-0 z-50 bg-white w-[290px] overflow-y-auto h-screen transition-all duration-300 transform ${
+          isHamburgerOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="w-full mt-5">Hello</div>
+        <Link
+          href={"/"}
+          className="text-primary-10 flex items-center gap-2 font-bold text-xl leading-[32px]"
+        >
+          <Image src={ICONS.blogLogo} className="size-7" alt="blog-logo" />
+          Blog
+        </Link>
+
+        <div className="flex flex-col gap-2">
+          {sidebarLinks.map((link) => (
+            <Link
+              key={link.label}
+              href={link.href}
+              className={`${
+                pathname === link.href
+                  ? "bg-primary-10 text-primary-40 hover:bg-primary-10/95"
+                  : "bg-white hover:bg-gray-50 text-neutral-20"
+              } flex justify-between items-center w-full px-4 rounded-md cursor-pointer transition-all duration-200 py-3 `}
+            >
+              <div className="flex items-center gap-[8px]">
+                {link.icon}
+                <p className="inline text-[1rem] font-[400]">{link.label}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );

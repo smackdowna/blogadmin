@@ -17,7 +17,7 @@ const ActionMenu = () => {
     };
 
     return (
-        <div className="flex justify-end absolute top-3 right-3">
+        <div className="flex justify-end absolute top-3 right-1 lg:right-3">
             {/* Three dots button */}
             <button onClick={handleMenuToggle}>
                 <BsThreeDotsVertical className="text-xl text-neutral-20" />

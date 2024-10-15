@@ -12,26 +12,27 @@ const UserDropdown = () => {
     {
       label: "Dashboard",
       href: "/",
-      icon: <RxDashboard className="text-[1.3rem] " />,
+      icon: <RxDashboard className="text-[1.3rem]" />,
     },
     {
       label: "Blogs",
       href: "/blogs",
-      icon: <RiBloggerLine className="text-[1.3rem] " />,
+      icon: <RiBloggerLine className="text-[1.3rem]" />,
     },
     {
       label: "Create Blog",
       href: "/create-blog",
-      icon: <MdOutlineCreateNewFolder className="text-[1.3rem] " />,
+      icon: <MdOutlineCreateNewFolder className="text-[1.3rem]" />,
     },
   ];
 
   const [open, setOpen] = useState(false);
-  const dropDownRef = useRef(null);
+  const dropDownRef = useRef<HTMLDivElement>(null); // Correctly typing the ref
 
   useEffect(() => {
     const close = (e: MouseEvent) => {
-      if (dropDownRef.current && !dropDownRef.current.contains(e.target)) {
+      // Check if click is outside of dropdown
+      if (dropDownRef.current && !dropDownRef.current.contains(e.target as Node)) {
         setOpen(false);
       }
     };
@@ -43,7 +44,7 @@ const UserDropdown = () => {
     <div ref={dropDownRef} className="relative w-fit text-white">
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="bg-gray-50 text-neutral-20 rounded-lg px-4 py-2 font-semibold flex items-center justify-between w-[200px]"
+        className="bg-white xl:bg-gray-50 text-neutral-20 rounded-lg px-4 py-2 font-semibold flex items-center justify-between w-[200px]"
       >
         Rahul Sutradhar
         <FaSortDown />

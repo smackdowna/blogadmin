@@ -1,8 +1,10 @@
 "use client";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import FileInput from "./FileInput";
-import { AiOutlineClose } from "react-icons/ai"; // Cross icon
+import { AiOutlineClose } from "react-icons/ai";
+import dynamic from "next/dynamic";
+const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false, loading: () => <p>Loading...</p> });
 
 type CreateBlogFormInputs = {
   title: string;
@@ -11,19 +13,34 @@ type CreateBlogFormInputs = {
 };
 
 const CreateBlogForm = () => {
+  const editor = useRef(null);
+  const [content, setContent] = useState("");
+  const [contentError, setContentError] = useState("");
+  useEffect(() => {
+    setContentError("");
+    if (content?.length === 0) {
+        setContentError("");
+      }
+    else if (content?.length < 1) {
+        setContentError("Content is required");
+      } else {
+      setContentError("");
+    }
+  }, [content]);
+
+  
   const { register, handleSubmit, formState: { errors }, setValue } = useForm<CreateBlogFormInputs>();
   
-  const [tags, setTags] = useState<string[]>([]); // State to store tags
+  const [tags, setTags] = useState<string[]>([]);
 
   // Function to handle the form submission
   const handleCreateBlog: SubmitHandler<CreateBlogFormInputs> = (data) => {
     const blogData = {
       title: data.title,
       metadata: data.metadata,
-      tags: tags, // Include the tags in blog data
+      tags: tags,
     };
     console.log(blogData);
-    // Here you would send the blogData to the backend
   };
 
   // Function to add a tag when the user presses Enter
@@ -48,8 +65,8 @@ const CreateBlogForm = () => {
 
   return (
     <div className="w-full space-y-7 rounded-lg border bg-white p-7 sm:p-10 mt-7">
-      <form onSubmit={handleSubmit(handleCreateBlog)} className="flex flex-col lg:flex-row gap-5">
-        <div className="space-y-5 w-[70%]">
+      <form onSubmit={handleSubmit(handleCreateBlog)} className="flex flex-col-reverse lg:flex-row gap-5">
+        <div className="space-y-5 w-full lg:w-[70%]">
           <div className="space-y-2 text-sm">
             <label htmlFor="title" className="block text-zinc-700 font-medium">
               Title
@@ -102,6 +119,20 @@ const CreateBlogForm = () => {
             </div>
           </div>
 
+          <div className="space-y-2 text-sm">
+            <label htmlFor="metadata" className="block text-zinc-700 font-medium">
+              Metadata
+            </label>
+            <JoditEditor
+  ref={editor}
+  value={content}
+  onChange={(newContent) => setContent(newContent)}
+/>
+{contentError && (
+            <span className="text-warning-10 text-start">{contentError}</span>
+          )}
+          </div>
+
           <div className="flex justify-end">
             <button
               type="submit"
@@ -112,7 +143,7 @@ const CreateBlogForm = () => {
           </div>
         </div>
 
-        <div className="w-[30%]">
+        <div className="w-full lg:w-[30%]">
           {/* File input component */}
           <FileInput />
         </div>

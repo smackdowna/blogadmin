@@ -1,6 +1,7 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { createApi, fetchBaseQuery, FetchArgs, BaseQueryFn } from '@reduxjs/toolkit/query/react';
 
-const baseQuery = async (args, api, extraOptions) => {
+const baseQuery: BaseQueryFn<string | FetchArgs, unknown, any> = async (args, api, extraOptions) => {
   const rawBaseQuery = fetchBaseQuery({
     baseUrl: 'http://localhost:5000/',
     credentials: 'include',
@@ -10,7 +11,6 @@ const baseQuery = async (args, api, extraOptions) => {
   
   // If an error occurs, pass it along to the component
   if (result.error) {
-    // This error will be caught in the component
     return {
       error: {
         status: result.error.status,

@@ -7,28 +7,30 @@ import { RiBloggerLine } from "react-icons/ri";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
 import { usePathname } from "next/navigation";
 
+export const sidebarLinks = [
+  {
+    label: "Dashboard",
+    href: "/",
+    icon: <RxDashboard className="text-[1.2rem] " />,
+  },
+  {
+    label: "Blogs",
+    href: "/blogs",
+    icon: <RiBloggerLine className="text-[1.4rem] " />,
+  },
+  {
+    label: "Create Blog",
+    href: "/create-blog",
+    icon: <MdOutlineCreateNewFolder className="text-[1.3rem] " />,
+  },
+];
+
 const Sidebar = () => {
   const pathname = usePathname();
   console.log(pathname);
-  const sidebarLinks = [
-    {
-      label: "Dashboard",
-      href: "/",
-      icon: <RxDashboard className="text-[1.2rem] " />,
-    },
-    {
-      label: "Blogs",
-      href: "/blogs",
-      icon: <RiBloggerLine className="text-[1.4rem] " />,
-    },
-    {
-      label: "Create Blog",
-      href: "/create-blog",
-      icon: <MdOutlineCreateNewFolder className="text-[1.3rem] " />,
-    },
-  ];
+  
   return (
-    <div className="bg-white border-r w-[250px] p-4 h-screen sticky top-0 left-0 flex flex-col gap-[70px]">
+    <div className="bg-white border-r w-[250px] p-4 h-screen sticky top-0 left-0 hidden xl:flex flex-col gap-[70px]">
       <Link
         href={"/"}
         className="text-primary-10 flex items-center gap-2 font-bold text-xl leading-[32px]"

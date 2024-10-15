@@ -2,8 +2,7 @@ import { ReactNode } from "react";
 
 type TStatusCardProps = {
     title:string;
-    string:string | number;
-    value:string | number;
+    value:number;
     iconBgColor:string;
     icon:ReactNode;
 }

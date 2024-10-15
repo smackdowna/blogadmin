@@ -9,7 +9,7 @@ const BlogCard = () => {
 
     return (
         <div className='border border-neutral-30/40 rounded-xl p-6 flex flex-col lg:flex-row items-center gap-6 relative bg-white'>
-            <Image src={IMAGES.blogImg} className="" alt="blog-img" />
+            <Image src={IMAGES.blogImg} className="w-full xl:w-[400px] h-[300px] object-cover rounded-xl" alt="blog-img" />
 
             <div className="flex flex-col gap-6">
                 {/* Three Dots Menu */}
