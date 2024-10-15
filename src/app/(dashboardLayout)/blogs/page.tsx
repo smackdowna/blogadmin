@@ -1,10 +1,13 @@
+'use client'
 import BlogCard from "@/Components/BlogPageComponents/BlogCard";
 import Image from "next/image";
 import { ICONS } from "../../../../public";
 import Link from "next/link";
+import { useGetAllBlogsQuery } from "@/redux/features/Blog/blogApi";
 
 
 const Blogs = () => {
+  const {data:allBlogs}= useGetAllBlogsQuery({});
     return (
         <div className='bg-white rounded-xl px-3 py-3 md:px-6 md:py-4 w-full'>
             <div className="flex flex-col gap-8 md:gap-0 md:flex-row items-center justify-between border-b border-primary-20 pb-4">

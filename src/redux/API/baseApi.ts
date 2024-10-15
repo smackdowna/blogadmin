@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { createApi, fetchBaseQuery, FetchArgs, BaseQueryFn } from '@reduxjs/toolkit/query/react';
+import { BaseQueryApi, BaseQueryFn, createApi, DefinitionType, FetchArgs, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-const baseQuery: BaseQueryFn<string | FetchArgs, unknown, any> = async (args, api, extraOptions) => {
+const baseQuery : BaseQueryFn<FetchArgs, BaseQueryApi, DefinitionType>= async (args, api, extraOptions) => {
   const rawBaseQuery = fetchBaseQuery({
-    baseUrl: 'http://localhost:5000/',
+    baseUrl: 'https://bonohomebackend.vercel.app/api/v1',
     credentials: 'include',
   });
 
@@ -11,6 +10,7 @@ const baseQuery: BaseQueryFn<string | FetchArgs, unknown, any> = async (args, ap
   
   // If an error occurs, pass it along to the component
   if (result.error) {
+    // This error will be caught in the component
     return {
       error: {
         status: result.error.status,
@@ -25,6 +25,6 @@ const baseQuery: BaseQueryFn<string | FetchArgs, unknown, any> = async (args, ap
 export const baseApi = createApi({
   reducerPath: 'baseApi',
   baseQuery,
-  tagTypes: ['user', 'blogs'],
+  tagTypes: ['users', 'blogs'],
   endpoints: () => ({}),
 });

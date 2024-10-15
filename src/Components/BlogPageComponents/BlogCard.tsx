@@ -13,7 +13,7 @@ const BlogCard = () => {
 
             <div className="flex flex-col gap-6">
                 {/* Three Dots Menu */}
-                <ActionMenu/>
+                <ActionMenu id={"id"}/>
 
                 <div>
                     <h1 className='text-black text-lg font-semibold leading-[32px]'>All BlogCard</h1>
