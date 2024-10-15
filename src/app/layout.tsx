@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import ClientProvider from "@/providers/ClientProvider";
+// import ClientProvider from "@/providers/ClientProvider";
 
 export const metadata: Metadata = {
   title: "Blog Admin Panel",
@@ -15,9 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ClientProvider>
+        {/* <ClientProvider> */}
         {children}
-        </ClientProvider>
+        {/* </ClientProvider> */}
       </body>
     </html>
   );
