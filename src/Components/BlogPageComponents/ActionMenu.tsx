@@ -6,11 +6,12 @@ import { RiDeleteBin6Line } from "react-icons/ri";  // Delete icon
 import { useState } from 'react';
 import Modal from "../Modal/Modal";
 import { RxCross2 } from "react-icons/rx";
-import { useDeleteBlogMutation } from "@/redux/features/Blog/blogApi";
+// import { useDeleteBlogMutation } from "@/redux/features/Blog/blogApi";
 
 
 const ActionMenu = ({id}:{id:string}) => {
-    const [deleteBlog, {isLoading}] = useDeleteBlogMutation();
+    console.log(id)
+    // const [deleteBlog, {isLoading}] = useDeleteBlogMutation();
     const [openDeleteConfirmModal, setOpenDeleteConfirmModal] = useState<boolean>(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -18,15 +19,15 @@ const ActionMenu = ({id}:{id:string}) => {
         setIsMenuOpen(!isMenuOpen);
     };
 
-    const handleDeleteBlog= async () => {
-        try{
-           const response = await deleteBlog(id).unwrap();
-            console.log(response)
-        } catch(err){
-            console.log(err)
-            // err
-        }
-    }
+    // const handleDeleteBlog= async () => {
+    //     try{
+    //        const response = await deleteBlog(id).unwrap();
+    //         console.log(response)
+    //     } catch(err){
+    //         console.log(err)
+    //         // err
+    //     }
+    // }
 
     return (
         <div className="flex justify-end absolute top-3 right-1 lg:right-3">
@@ -75,13 +76,15 @@ const ActionMenu = ({id}:{id:string}) => {
             <button onClick={() => setOpenDeleteConfirmModal(false)} className={`bg-primary-20 shadow text-neutral-20 rounded-lg px-4 py-2  font-semibold leading-[22px]`}>
             Cancel
           </button>
-            <button onClick={handleDeleteBlog} className={`bg-rose-500 shadow hover:bg-primary-10/95 text-white rounded-lg px-4 py-2  font-semibold leading-[22px] w-[150px]`}>
-            {
+          {/* onClick={handleDeleteBlog} */}
+            <button  className={`bg-rose-500 shadow hover:bg-primary-10/95 text-white rounded-lg px-4 py-2  font-semibold leading-[22px] w-[150px]`}>
+            {/* {
                 isLoading ? 
                 "Deleting..."
                 :
                 "Delete"
-            }
+            } */}
+            Delete
           </button>
             </div>
             </Modal>
