@@ -18,8 +18,6 @@ const BlogCard = ({blog} : {blog:TBlog}) => {
         author: { _id: authorId, full_name },
         createdAt,
       } = blog;
-
-      console.log(tags)
       const truncateContent = (text: string, limit: number) => {
         return text.length > limit ? `${text.slice(0, limit)}...` : text;
       };
@@ -37,7 +35,7 @@ const BlogCard = ({blog} : {blog:TBlog}) => {
 
             <div className="flex flex-col gap-6">
                 {/* Three Dots Menu */}
-                <ActionMenu id={_id}/>
+                <ActionMenu blog={blog}/>
 
                 <div>
                     <h1 className='text-black text-lg font-semibold leading-[32px]'>{title}</h1>
@@ -54,7 +52,7 @@ const BlogCard = ({blog} : {blog:TBlog}) => {
                     </div>
                 </div>
 
-                <div className="flex items-center gap-4">
+                <div className="flex flex-wrap items-center gap-4">
                     {
                         tags?.map((tag, index) => 
                             <div key={index} className="px-3 h-9 rounded-xl border border-neutral-30 text-black font-semibold leading-5 flex items-center justify-center">{tag}</div>

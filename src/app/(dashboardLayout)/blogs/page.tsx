@@ -10,8 +10,7 @@ import BlogCardLoader from "@/Components/Loaders/BlogCardLoader";
 
 const Blogs = () => {
   const { data: allBlogs, isLoading } = useGetAllBlogsQuery({});
-  
-  console.log(allBlogs);
+
     return (
         <div className='bg-white rounded-xl px-3 py-3 md:px-6 md:py-4 w-full'>
             <div className="flex flex-col gap-8 md:gap-0 md:flex-row items-center justify-between border-b border-primary-20 pb-4">

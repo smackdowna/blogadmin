@@ -8,12 +8,14 @@ import Modal from "../Modal/Modal";
 import { RxCross2 } from "react-icons/rx";
 import { useDeleteBlogMutation } from "@/redux/features/Blog/blogApi";
 import { toast } from 'sonner'
+import EditBlogModal from "./EditBlogModal";
+import { TBlog } from "@/types/blog.types";
 
 
-const ActionMenu = ({id}:{id:string}) => {
-    // console.log(id)
+const ActionMenu = ({blog}:{blog:TBlog}) => {
     const [deleteBlog, {isLoading}] = useDeleteBlogMutation();
     const [openDeleteConfirmModal, setOpenDeleteConfirmModal] = useState<boolean>(false);
+    const [openEditBlogModal, setOpenEditBlogModal] = useState<boolean>(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const handleMenuToggle = () => {
@@ -22,12 +24,12 @@ const ActionMenu = ({id}:{id:string}) => {
 
     const handleDeleteBlog= async () => {
         try{
-           const response = await deleteBlog(id).unwrap();
+           const response = await deleteBlog(blog?._id).unwrap();
             console.log(response)
             if(response.success){
                 toast.success(response?.message)
             }
-        } catch(err){
+        } catch(err:any){
             toast.error(err.data.message)
             console.log(err)
             // err
@@ -47,7 +49,7 @@ const ActionMenu = ({id}:{id:string}) => {
                     <ul className="py-2">
                         {/* Edit Option */}
                         <li 
-                        onClick={() => setOpenDeleteConfirmModal(true)}
+                        onClick={() => setOpenEditBlogModal(true)}
                             className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-black flex items-center gap-2"
                         >
                             <FiEdit className="text-lg" />
@@ -91,6 +93,14 @@ const ActionMenu = ({id}:{id:string}) => {
             }
           </button>
             </div>
+            </Modal>
+
+            <Modal
+           openModal={openEditBlogModal}
+        setOpenModal={setOpenEditBlogModal}
+        classNames="w-full max-w-[450px] h-[500px] p-5"
+           >
+            <EditBlogModal setOpenEditBlogModal={setOpenEditBlogModal} blog={blog} />
             </Modal>
         </div>
     );

@@ -21,12 +21,17 @@ const blogApi = baseApi.injectEndpoints({
     }),
 
     editBlog: builder.mutation({
-      query: (id) => ({
-        url: `/blog/${id}`,
-        method: "PUT",
-      }),
-      invalidatesTags : ["blogs"]
+      query: ({ id, formData }) => {
+        console.log('Updated Data:', formData);
+        return {
+          url: `/blog/${id}`,
+          method: "PUT",
+          body: formData,
+        };
+      },
+      invalidatesTags: ["blogs"],
     }),
+    
 
     createBlog: builder.mutation({
       query: (userInfo) => ({

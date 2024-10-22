@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import FileInput from "./FileInput";
 import { AiOutlineClose } from "react-icons/ai";
 import dynamic from "next/dynamic";
-// import { useCreateBlogMutation } from "@/redux/features/Blog/blogApi";
+import { useCreateBlogMutation } from "@/redux/features/Blog/blogApi";
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false, loading: () => <p>Loading...</p> });
 
@@ -16,7 +16,7 @@ type CreateBlogFormInputs = {
 };
 
 const CreateBlogForm = () => {
-  // const [createBlog] = useCreateBlogMutation();
+  const [createBlog] = useCreateBlogMutation();
   const editor = useRef(null);
   const [content, setContent] = useState("");
   const [contentError, setContentError] = useState("");
@@ -39,25 +39,25 @@ const CreateBlogForm = () => {
     }
   }, [content]);
 
-  // const handleCreateBlog: SubmitHandler<CreateBlogFormInputs> = async (data) => {
-  //   const formData = new FormData();
-  //   formData.append("title", JSON.stringify(data.title));
-  //   formData.append("metaDescription", JSON.stringify(data.metadata));
-  //   formData.append("content", JSON.stringify(content));
-  //   formData.append("category", JSON.stringify(data.category));
-  //   formData.append("tags", JSON.stringify(tags));
+  const handleCreateBlog: SubmitHandler<CreateBlogFormInputs> = async (data) => {
+    const formData = new FormData();
+    formData.append("title", JSON.stringify(data.title));
+    formData.append("metaDescription", JSON.stringify(data.metadata));
+    formData.append("content", JSON.stringify(content));
+    formData.append("category", JSON.stringify(data.category));
+    formData.append("tags", JSON.stringify(tags));
 
-  //   if (selectedFile) {
-  //     formData.append("file", selectedFile);
-  //   }
+    if (selectedFile) {
+      formData.append("file", selectedFile);
+    }
 
-  //   try {
-  //     const response = await createBlog(formData).unwrap();
-  //     console.log('Blog created successfully:', response);
-  //   } catch (error) {
-  //     console.error('Error creating blog:', error);
-  //   }
-  // };
+    try {
+      const response = await createBlog(formData).unwrap();
+      console.log('Blog created successfully:', response);
+    } catch (error) {
+      console.error('Error creating blog:', error);
+    }
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && e.currentTarget.value.trim() !== "") {
