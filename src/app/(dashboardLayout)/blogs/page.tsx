@@ -3,11 +3,15 @@ import BlogCard from "@/Components/BlogPageComponents/BlogCard";
 import Image from "next/image";
 import { ICONS } from "../../../../public";
 import Link from "next/link";
-// import { useGetAllBlogsQuery } from "@/redux/features/Blog/blogApi";
+import { useGetAllBlogsQuery } from "@/redux/features/Blog/blogApi";
+import { TBlog } from "@/types/blog.types";
+import BlogCardLoader from "@/Components/Loaders/BlogCardLoader";
 
 
 const Blogs = () => {
-  // const {data:allBlogs}= useGetAllBlogsQuery({});
+  const { data: allBlogs, isLoading } = useGetAllBlogsQuery({});
+  
+  console.log(allBlogs);
     return (
         <div className='bg-white rounded-xl px-3 py-3 md:px-6 md:py-4 w-full'>
             <div className="flex flex-col gap-8 md:gap-0 md:flex-row items-center justify-between border-b border-primary-20 pb-4">
@@ -40,8 +44,14 @@ const Blogs = () => {
           </div>
 
             <div className="grid grid-cols-1 gap-6 mt-8">
-                <BlogCard/>
-                <BlogCard/>
+              {
+                isLoading ?
+                <BlogCardLoader/>
+                :
+                allBlogs?.data?.map((blog:TBlog) => 
+                  <BlogCard key={blog?._id} blog={blog} />
+                )
+              }
             </div>
         </div>
     );

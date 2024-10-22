@@ -1,17 +1,18 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { FiEdit } from "react-icons/fi";  // Edit icon
-import { RiDeleteBin6Line } from "react-icons/ri";  // Delete icon
+import { FiEdit } from "react-icons/fi";
+import { RiDeleteBin6Line } from "react-icons/ri";
 import { useState } from 'react';
 import Modal from "../Modal/Modal";
 import { RxCross2 } from "react-icons/rx";
-// import { useDeleteBlogMutation } from "@/redux/features/Blog/blogApi";
+import { useDeleteBlogMutation } from "@/redux/features/Blog/blogApi";
+import { toast } from 'sonner'
 
 
 const ActionMenu = ({id}:{id:string}) => {
-    console.log(id)
-    // const [deleteBlog, {isLoading}] = useDeleteBlogMutation();
+    // console.log(id)
+    const [deleteBlog, {isLoading}] = useDeleteBlogMutation();
     const [openDeleteConfirmModal, setOpenDeleteConfirmModal] = useState<boolean>(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -19,15 +20,19 @@ const ActionMenu = ({id}:{id:string}) => {
         setIsMenuOpen(!isMenuOpen);
     };
 
-    // const handleDeleteBlog= async () => {
-    //     try{
-    //        const response = await deleteBlog(id).unwrap();
-    //         console.log(response)
-    //     } catch(err){
-    //         console.log(err)
-    //         // err
-    //     }
-    // }
+    const handleDeleteBlog= async () => {
+        try{
+           const response = await deleteBlog(id).unwrap();
+            console.log(response)
+            if(response.success){
+                toast.success(response?.message)
+            }
+        } catch(err){
+            toast.error(err.data.message)
+            console.log(err)
+            // err
+        }
+    }
 
     return (
         <div className="flex justify-end absolute top-3 right-1 lg:right-3">
@@ -77,14 +82,13 @@ const ActionMenu = ({id}:{id:string}) => {
             Cancel
           </button>
           {/* onClick={handleDeleteBlog} */}
-            <button  className={`bg-rose-500 shadow hover:bg-primary-10/95 text-white rounded-lg px-4 py-2  font-semibold leading-[22px] w-[150px]`}>
-            {/* {
+            <button onClick={handleDeleteBlog}  className={`bg-rose-500 shadow hover:bg-primary-10/95 text-white rounded-lg px-4 py-2  font-semibold leading-[22px] w-[150px]`}>
+            {
                 isLoading ? 
                 "Deleting..."
                 :
                 "Delete"
-            } */}
-            Delete
+            }
           </button>
             </div>
             </Modal>
