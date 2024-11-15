@@ -3,6 +3,24 @@ import { ICONS } from "../../../../public";
 import Link from "next/link";
 import CategoryCard from './../../../Components/CategoryCard/CategoryCard';
 
+type TSubCategory = {
+  _id: string;
+  name: string;
+};
+
+type TCategory={
+  _id:string;
+  name:string;
+  description:string[];
+  subCategories:TSubCategory[]
+  thumbnail:{
+    fileId:string;
+    name:string;
+    url:string;
+    thumbnailUrl:string;
+    _id:string;
+  }
+}
 
 const AllCategories = async () => {
   const response = await fetch(
@@ -21,7 +39,7 @@ const AllCategories = async () => {
           </Link>
           </div>
 
-            <div className="flex flex-col-reverse md:flex-row w-full items-center gap-6">
+            {/* <div className="flex flex-col-reverse md:flex-row w-full items-center gap-6">
             <div className="relative input-nav-flex w-full">
             <Image
               src={ICONS.searchIcon} 
@@ -33,17 +51,17 @@ const AllCategories = async () => {
               placeholder="Search" 
               className={`text-black bg-gray-50 border-primary-10 transition duration-300 focus:shadow pl-11 w-full max-w-full md:max-w-[300px] pr-4 py-2 rounded-lg focus:outline-none`}
             />
-          </div>
+          </div> */}
 
           <Link href="/create-category" className={`bg-primary-10 hover:bg-primary-10/95 text-white rounded-lg px-4 py-2 font-semibold leading-[22px] hidden w-full md:w-[290px] md:flex items-center justify-center`}>
             Add New Category
           </Link>
-          </div>
+          {/* </div> */}
           </div>
 
             <div className="grid grid-cols-1 gap-6 mt-8">
               {
-                allCategories?.map((category) => 
+                allCategories?.map((category:TCategory) => 
                   <CategoryCard key={category?._id} category={category} />
                 )
               }

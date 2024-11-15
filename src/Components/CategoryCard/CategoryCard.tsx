@@ -1,17 +1,26 @@
 import Image from "next/image";
-import { IMAGES } from "../../../public";
-
-type TCategory = {
-  category: {
-    name: string;
-    subCategories: string[];
-  };
-};
+// import { IMAGES } from "../../../public";
 
 type TSubCategory = {
   _id: string;
   name: string;
 };
+
+type TCategory={
+ category:{
+  _id:string;
+  name:string;
+  description:string[];
+  subCategories:TSubCategory[]
+  thumbnail:{
+    fileId:string;
+    name:string;
+    url:string;
+    thumbnailUrl:string;
+    _id:string;
+  }
+ }
+}
 
 const CategoryCard: React.FC<TCategory> = ({ category }) => {
   return (
@@ -33,7 +42,7 @@ const CategoryCard: React.FC<TCategory> = ({ category }) => {
           <h1 className="text-black text-lg font-semibold leading-[32px]">
             {category?.name}
           </h1>
-          <p className="text-neutral-25 text-base leading-5 mt-[10px]">Hi</p>
+          <p className="text-neutral-25 text-base leading-5 mt-[10px]">{category?.description[0]}</p>
 
           <div className="flex flex-wrap items-center gap-4 mt-5">
             {category?.subCategories?.map((subCategory: TSubCategory) => (

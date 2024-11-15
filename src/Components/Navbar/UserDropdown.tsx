@@ -12,10 +12,16 @@ import { logout, selectCurrentUser } from '@/redux/features/Auth/authSlice';
 import { toast } from 'sonner';
 import Cookies from 'js-cookie';
 
+type TUser={
+    _id:string;
+  full_name:string;
+  email:string;
+}
+
 const UserDropdown = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const user = useSelector(selectCurrentUser);
+  const user = useSelector(selectCurrentUser) as TUser | null;
   const handleLogout = () => {
     dispatch(logout());
     Cookies.remove('isAuthenticated');
@@ -59,7 +65,7 @@ const UserDropdown = () => {
         onClick={() => setOpen((prev) => !prev)}
         className="bg-white xl:bg-gray-50 text-neutral-20 rounded-lg px-4 py-2 font-semibold flex items-center justify-between w-[200px]"
       >
-        {user?.full_name}
+        {user ? user.full_name : 'Guest'}
         <FaSortDown className="leading-none text-start"/>
       </button>
 

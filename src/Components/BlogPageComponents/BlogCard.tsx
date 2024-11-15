@@ -1,9 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
 import Image from "next/image";
-import { IMAGES } from "../../../public";
+// import { IMAGES } from "../../../public";
 import ActionMenu from "./ActionMenu";
 import { TBlog } from "@/types/blog.types";
 import { formatDate } from "@/utils/convertDate";
+import { FaUserEdit } from "react-icons/fa";
 
 
 const BlogCard = ({blog} : {blog:TBlog}) => {
@@ -42,7 +43,8 @@ const BlogCard = ({blog} : {blog:TBlog}) => {
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <Image src={IMAGES.profileImg} className="size-12 rounded-full" alt="profile-img" />
+                    {/* <Image src={IMAGES.profileImg} className="size-12 rounded-full" alt="profile-img" /> */}
+                    <FaUserEdit className="text-3xl" />
                     <div>
                         <h1 className='text-black text-base font-medium leading-6'>{full_name}</h1>
                         <p className='text-neutral-90 text-base leading-6'>{formatDate(createdAt)}</p>
