@@ -34,10 +34,10 @@ const blogApi = baseApi.injectEndpoints({
     
 
     createBlog: builder.mutation({
-      query: (userInfo) => ({
+      query: (formData) => ({
         url: "/blog/create",
         method: "POST",
-        body: userInfo,
+        body: formData,
       }),
       invalidatesTags : ["blogs"]
     }),

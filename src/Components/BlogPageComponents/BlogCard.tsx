@@ -8,14 +8,13 @@ import { formatDate } from "@/utils/convertDate";
 
 const BlogCard = ({blog} : {blog:TBlog}) => {
     const {
-        _id,
         title,
-        metaDescription,
+        // metaDescription,
         content,
-        category,
+        // category,
         tags,
-        thumbnail: { fileId, name, url, thumbnailUrl, _id: thumbnailId },
-        author: { _id: authorId, full_name },
+        thumbnail: { name, thumbnailUrl },
+        author: {full_name },
         createdAt,
       } = blog;
       const truncateContent = (text: string, limit: number) => {
@@ -39,9 +38,7 @@ const BlogCard = ({blog} : {blog:TBlog}) => {
 
                 <div>
                     <h1 className='text-black text-lg font-semibold leading-[32px]'>{title}</h1>
-                    <p className='text-neutral-25 text-base leading-5 mt-[10px]'>
-                    {truncateContent(content, 500)}
-                    </p>
+                    <p className='text-neutral-25 text-base leading-5 mt-[10px]' dangerouslySetInnerHTML={{ __html: truncateContent(content, 500) }}/>
                 </div>
 
                 <div className="flex items-center gap-4">

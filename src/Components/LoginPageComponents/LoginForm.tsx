@@ -3,6 +3,9 @@ import { useLoginMutation } from "@/redux/features/Auth/authApi";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { toast } from 'sonner'
+import { useDispatch } from 'react-redux';
+import { setUser } from "@/redux/features/Auth/authSlice";
+import Cookies from 'js-cookie';
 
 
 type LoginFormInputs = {
@@ -11,6 +14,7 @@ type LoginFormInputs = {
 };
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
   const [login, {isLoading}] = useLoginMutation();
   const { register, handleSubmit, formState: { errors } } = useForm<LoginFormInputs>();
@@ -22,7 +26,8 @@ const LoginForm = () => {
     };
     try{
       const response = await login(loginData).unwrap();
-       console.log(response)
+      dispatch(setUser({ user:response.user}));
+      Cookies.set('isAuthenticated', 'true');
        toast.success("Welcome Back!!")
        router.push("/");
    } catch(err){
