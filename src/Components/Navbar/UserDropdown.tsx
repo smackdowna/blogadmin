@@ -4,11 +4,31 @@ import { FaSortDown } from "react-icons/fa";
 import { RxDashboard } from "react-icons/rx";
 import { RiBloggerLine } from "react-icons/ri";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
-import { FiLogOut } from "react-icons/fi"; // Import the logout icon
+import { FiLogOut } from "react-icons/fi";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from 'react-redux';
+import { logout, selectCurrentUser } from '@/redux/features/Auth/authSlice';
+import { toast } from 'sonner';
+import Cookies from 'js-cookie';
+
+type TUser={
+    _id:string;
+  full_name:string;
+  email:string;
+}
 
 const UserDropdown = () => {
-  const sidebarLinks = [
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const user = useSelector(selectCurrentUser) as TUser | null;
+  const handleLogout = () => {
+    dispatch(logout());
+    Cookies.remove('isAuthenticated');
+    router.push("/login");
+    toast.success("Logged out successfully.");
+  };
+  const dropdownLinks = [
     {
       label: "Dashboard",
       href: "/",
@@ -27,11 +47,10 @@ const UserDropdown = () => {
   ];
 
   const [open, setOpen] = useState(false);
-  const dropDownRef = useRef<HTMLDivElement>(null); // Correctly typing the ref
+  const dropDownRef = useRef<HTMLDivElement>(null); 
 
   useEffect(() => {
     const close = (e: MouseEvent) => {
-      // Check if click is outside of dropdown
       if (dropDownRef.current && !dropDownRef.current.contains(e.target as Node)) {
         setOpen(false);
       }
@@ -46,12 +65,12 @@ const UserDropdown = () => {
         onClick={() => setOpen((prev) => !prev)}
         className="bg-white xl:bg-gray-50 text-neutral-20 rounded-lg px-4 py-2 font-semibold flex items-center justify-between w-[200px]"
       >
-        Rahul Sutradhar
-        <FaSortDown />
+        {user ? user.full_name : 'Guest'}
+        <FaSortDown className="leading-none text-start"/>
       </button>
 
       <ul className={`${open ? 'visible' : 'invisible'} absolute top-12 z-50 w-full space-y-1 bg-white pb-1`}>
-        {sidebarLinks.map((item, idx) => (
+        {dropdownLinks.map((item, idx) => (
           <Link
             key={idx}
             href={item.href}
@@ -66,10 +85,10 @@ const UserDropdown = () => {
         {/* Logout button with animation */}
         <li
           className={` ${open ? 'opacity-100 duration-500' : 'opacity-0 duration-150'}`}
-          style={{ transform: `translateY(${open ? 0 : (sidebarLinks.length + 1) * 10}px)` }}
+          style={{ transform: `translateY(${open ? 0 : (dropdownLinks.length + 1) * 10}px)` }}
         >
           <button
-            onClick={() => console.log('Logged out')}
+            onClick={handleLogout}
             className="rounded-sm px-4 py-[10px] w-full hover:bg-gray-50 text-neutral-20 flex items-center gap-3"
           >
             <FiLogOut className="text-[1.3rem]" />

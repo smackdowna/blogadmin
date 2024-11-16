@@ -5,6 +5,8 @@ import { ICONS } from "../../../public";
 import { RxDashboard } from "react-icons/rx";
 import { RiBloggerLine } from "react-icons/ri";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
+import { AiOutlineGroup } from "react-icons/ai";
+import { IoCreateOutline } from "react-icons/io5";
 import { usePathname } from "next/navigation";
 
 export const sidebarLinks = [
@@ -22,6 +24,16 @@ export const sidebarLinks = [
     label: "Create Blog",
     href: "/create-blog",
     icon: <MdOutlineCreateNewFolder className="text-[1.3rem] " />,
+  },
+  {
+    label: "Create Category",
+    href: "/create-category",
+    icon: <IoCreateOutline className="text-[1.3rem] " />,
+  },
+  {
+    label: "All Categories",
+    href: "/all-categories",
+    icon: <AiOutlineGroup className="text-[1.3rem] " />,
   },
 ];
 

@@ -1,30 +1,32 @@
-// import { BaseQueryApi, BaseQueryFn, createApi, DefinitionType, FetchArgs, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { BaseQueryFn, createApi, FetchBaseQueryError, FetchArgs, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-// const baseQuery : BaseQueryFn<FetchArgs, BaseQueryApi, DefinitionType>= async (args, api, extraOptions) => {
-//   const rawBaseQuery = fetchBaseQuery({
-//     baseUrl: 'https://bonohomebackend.vercel.app/api/v1',
-//     credentials: 'include',
-//   });
+const baseQuery: BaseQueryFn<FetchArgs, unknown, FetchBaseQueryError> = async (args, api, extraOptions) => {
+  const rawBaseQuery = fetchBaseQuery({
+    baseUrl: 'https://blogbackend-theta.vercel.app/api/v1',
+    credentials: 'include',
+  });
 
-//   const result = await rawBaseQuery(args, api, extraOptions);
-  
-//   // If an error occurs, pass it along to the component
-//   if (result.error) {
-//     // This error will be caught in the component
-//     return {
-//       error: {
-//         status: result.error.status,
-//         data: result.error.data || 'Something went wrong!',
-//       },
-//     };
-//   }
+  const result = await rawBaseQuery(args, api, extraOptions);
 
-//   return result;
-// };
+  // Check if there's an error and handle it
+  if (result.error) {
+    return {
+      error: {
+        status: result.error.status,
+        data: result.error.data || 'Something went wrong!',
+      } as FetchBaseQueryError,
+    };
+  }
 
-// export const baseApi = createApi({
-//   reducerPath: 'baseApi',
-//   baseQuery,
-//   tagTypes: ['users', 'blogs'],
-//   endpoints: () => ({}),
-// });
+  // Return result as expected by BaseQueryFn
+  return {
+    data: result.data,
+  };
+};
+
+export const baseApi = createApi({
+  reducerPath: 'baseApi',
+  baseQuery,
+  tagTypes: ['users', 'blogs', 'categories'],
+  endpoints: () => ({}),
+});

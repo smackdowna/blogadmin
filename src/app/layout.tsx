@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-// import ClientProvider from "@/providers/ClientProvider";
+import ClientProvider from "@/providers/ClientProvider";
+import { Toaster } from 'sonner'
 
 export const metadata: Metadata = {
   title: "Blog Admin Panel",
@@ -15,9 +16,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {/* <ClientProvider> */}
+        <ClientProvider>
         {children}
-        {/* </ClientProvider> */}
+        </ClientProvider>
+        <Toaster position="top-center" />
       </body>
     </html>
   );

@@ -1,5 +1,11 @@
 "use client"
+import { useLoginMutation } from "@/redux/features/Auth/authApi";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { toast } from 'sonner'
+import { useDispatch } from 'react-redux';
+import { setUser } from "@/redux/features/Auth/authSlice";
+import Cookies from 'js-cookie';
 
 
 type LoginFormInputs = {
@@ -8,14 +14,26 @@ type LoginFormInputs = {
 };
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const [login, {isLoading}] = useLoginMutation();
   const { register, handleSubmit, formState: { errors } } = useForm<LoginFormInputs>();
 
-  const handleLogin: SubmitHandler<LoginFormInputs> = (data) => {
+  const handleLogin: SubmitHandler<LoginFormInputs> = async (data) => {
     const loginData = {
       email: data.email,
       password: data.password,
     };
-    console.log(loginData);
+    try{
+      const response = await login(loginData).unwrap();
+      dispatch(setUser({ user:response.user}));
+      Cookies.set('isAuthenticated', 'true');
+       toast.success("Welcome Back!!")
+       router.push("/");
+   } catch(err){
+       console.log(err)
+       // err
+   }
   };
 
   return (
@@ -56,7 +74,12 @@ const LoginForm = () => {
             type="submit"
             className="rounded-md bg-primary-10 px-5 py-2 text-white transition-colors hover:bg-primary-10/95"
           >
-            Login
+            {
+                isLoading ? 
+                "Login in..."
+                :
+                "Login"
+            }
           </button>
         </div>
       </form>
