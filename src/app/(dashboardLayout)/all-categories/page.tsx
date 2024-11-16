@@ -1,5 +1,5 @@
-import Image from "next/image";
-import { ICONS } from "../../../../public";
+// import Image from "next/image";
+// import { ICONS } from "../../../../public";
 import Link from "next/link";
 import CategoryCard from './../../../Components/CategoryCard/CategoryCard';
 
