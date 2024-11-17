@@ -29,7 +29,7 @@ const LoginForm = () => {
       dispatch(setUser({ user:response.user}));
       Cookies.set('isAuthenticated', 'true');
        toast.success("Welcome Back!!")
-       router.push("/");
+       router.push("/dashboard");
    } catch(err){
        console.log(err)
        // err

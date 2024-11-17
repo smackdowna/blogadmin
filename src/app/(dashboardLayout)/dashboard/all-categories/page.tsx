@@ -1,7 +1,7 @@
 // import Image from "next/image";
 // import { ICONS } from "../../../../public";
 import Link from "next/link";
-import CategoryCard from './../../../Components/CategoryCard/CategoryCard';
+import CategoryCard from '../../../../Components/CategoryCard/CategoryCard';
 
 type TSubCategory = {
   _id: string;
@@ -24,7 +24,10 @@ type TCategory={
 
 const AllCategories = async () => {
   const response = await fetch(
-    `https://blogbackend-theta.vercel.app/api/v1/category`
+    `https://blogbackend-theta.vercel.app/api/v1/category`,
+    {
+      cache : 'no-store'
+    }
   );
   const allCategories = await response.json();
 
@@ -34,7 +37,7 @@ const AllCategories = async () => {
 
             <div className="flex items-center justify-between w-full">
             <h1 className='text-neutral-20 text-xl md:text-3xl font-bold leading-[38px]'>All Categories</h1>
-            <Link href="/create-category" className={`bg-primary-10 hover:bg-primary-10/95 text-white rounded-lg px-4 py-2  font-semibold leading-[22px] block md:hidden`}>
+            <Link href="/dashboard/create-category" className={`bg-primary-10 hover:bg-primary-10/95 text-white rounded-lg px-4 py-2  font-semibold leading-[22px] block md:hidden`}>
             Add New Category
           </Link>
           </div>
@@ -53,7 +56,7 @@ const AllCategories = async () => {
             />
           </div> */}
 
-          <Link href="/create-category" className={`bg-primary-10 hover:bg-primary-10/95 text-white rounded-lg px-4 py-2 font-semibold leading-[22px] hidden w-full md:w-[290px] md:flex items-center justify-center`}>
+          <Link href="/dashboard/create-category" className={`bg-primary-10 hover:bg-primary-10/95 text-white rounded-lg px-4 py-2 font-semibold leading-[22px] hidden w-full md:w-[290px] md:flex items-center justify-center`}>
             Add New Category
           </Link>
           {/* </div> */}
