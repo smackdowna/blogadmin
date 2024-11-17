@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Navbar from "@/Components/Navbar/Navbar";
 import Sidebar from "@/Components/Sidebar/Sidebar";
 import HamburgerMenu from "@/Components/Navbar/HamburgerMenu";
-import UserDropdown from './../../Components/Navbar/UserDropdown';
+import UserDropdown from '../../../Components/Navbar/UserDropdown';
 
 export const metadata: Metadata = {
   title: "Blog Admin Panel",

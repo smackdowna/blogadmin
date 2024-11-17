@@ -25,23 +25,23 @@ const UserDropdown = () => {
   const handleLogout = () => {
     dispatch(logout());
     Cookies.remove('isAuthenticated');
-    router.push("/login");
+    router.push("/");
     toast.success("Logged out successfully.");
   };
   const dropdownLinks = [
     {
       label: "Dashboard",
-      href: "/",
+      href: "/dashboard",
       icon: <RxDashboard className="text-[1.3rem]" />,
     },
     {
       label: "Blogs",
-      href: "/blogs",
+      href: "/dashboard/blogs",
       icon: <RiBloggerLine className="text-[1.3rem]" />,
     },
     {
       label: "Create Blog",
-      href: "/create-blog",
+      href: "/dashboard/create-blog",
       icon: <MdOutlineCreateNewFolder className="text-[1.3rem]" />,
     },
   ];
@@ -71,7 +71,7 @@ const UserDropdown = () => {
 
       <ul className={`${open ? 'visible' : 'invisible'} absolute top-12 z-50 w-full space-y-1 bg-white pb-1`}>
         {dropdownLinks.map((item, idx) => (
-          <Link
+          <a
             key={idx}
             href={item.href}
             className={`rounded-sm px-4 py-[10px] ${open ? 'opacity-100 duration-500' : 'opacity-0 duration-150'} hover:bg-gray-50 text-neutral-20 flex items-center gap-3`}
@@ -79,7 +79,7 @@ const UserDropdown = () => {
           >
             {item.icon}
             {item.label}
-          </Link>
+          </a>
         ))}
 
         {/* Logout button with animation */}

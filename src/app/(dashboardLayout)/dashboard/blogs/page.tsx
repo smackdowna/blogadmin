@@ -37,7 +37,7 @@ const Blogs = () => {
             />
           </div> */}
 
-          <Link href="/create-blog" className={`bg-primary-10 hover:bg-primary-10/95 text-white rounded-lg px-4 py-2 font-semibold leading-[22px] hidden w-full md:w-[290px] md:flex items-center justify-center`}>
+          <Link href="/dashboard/create-blog" className={`bg-primary-10 hover:bg-primary-10/95 text-white rounded-lg px-4 py-2 font-semibold leading-[22px] hidden w-full md:w-[290px] md:flex items-center justify-center`}>
             Create New Blog
           </Link>
           {/* </div> */}

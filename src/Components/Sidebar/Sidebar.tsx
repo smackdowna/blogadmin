@@ -12,27 +12,27 @@ import { usePathname } from "next/navigation";
 export const sidebarLinks = [
   {
     label: "Dashboard",
-    href: "/",
+    href: "/dashboard",
     icon: <RxDashboard className="text-[1.2rem] " />,
   },
   {
     label: "Blogs",
-    href: "/blogs",
+    href: "/dashboard/blogs",
     icon: <RiBloggerLine className="text-[1.4rem] " />,
   },
   {
     label: "Create Blog",
-    href: "/create-blog",
+    href: "/dashboard/create-blog",
     icon: <MdOutlineCreateNewFolder className="text-[1.3rem] " />,
   },
   {
     label: "Create Category",
-    href: "/create-category",
+    href: "/dashboard/create-category",
     icon: <IoCreateOutline className="text-[1.3rem] " />,
   },
   {
     label: "All Categories",
-    href: "/all-categories",
+    href: "/dashboard/all-categories",
     icon: <AiOutlineGroup className="text-[1.3rem] " />,
   },
 ];
