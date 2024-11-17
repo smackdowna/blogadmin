@@ -5,7 +5,6 @@ import { RxDashboard } from "react-icons/rx";
 import { RiBloggerLine } from "react-icons/ri";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
 import { FiLogOut } from "react-icons/fi";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, selectCurrentUser } from '@/redux/features/Auth/authSlice';
