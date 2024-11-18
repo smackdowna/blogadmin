@@ -26,9 +26,15 @@ const LoginForm = () => {
     };
     try{
       const response = await login(loginData).unwrap();
-      dispatch(setUser({ user:response.user}));
-      Cookies.set('isAuthenticated', 'true');
-       toast.success("Welcome Back!!")
+        if (response) {
+          dispatch(setUser({ user: response.user }));
+          Cookies.set('isAuthenticated', 'true');
+          toast.success("Welcome Back!!");
+        }
+      
+      // dispatch(setUser({ user:response.user}));
+      // Cookies.set('isAuthenticated', 'true');
+      //  toast.success("Welcome Back!!")
        router.push("/dashboard");
    } catch(err){
        console.log(err)

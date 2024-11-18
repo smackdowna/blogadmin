@@ -40,7 +40,7 @@ const CreateCategoryPage = () => {
       {
         loading: 'Creating category...',
         success: (response) => {
-          router.push('/all-categories');
+          router.push('/dashboard/all-categories');
           return response?.message || 'Category created successfully!';
         },
         error: (err) => {

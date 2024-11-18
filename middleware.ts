@@ -1,32 +1,32 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 
-// Define the routes you want to protect
-const protectedRoutes = ['/', '/blogs', '/create-blog', '/create-category', '/all-categories'];
+// List of protected routes
+const protectedRoutes = [
+  '/dashboard', 
+  '/dashboard/blogs', 
+  '/dashboard/create-blog', 
+  '/dashboard/create-category', 
+  '/dashboard/all-categories'
+];
 
 export function middleware(req: NextRequest) {
-  // Check if user is authenticated by reading a cookie
-  const isAuthenticated = req.cookies.get('isAuthenticated');
+  // Check if user is authenticated
+  const isAuthenticated = req.cookies.get('isAuthenticated')?.value === 'true';
 
-  // If the user is not authenticated and is trying to access a protected route, redirect them to /login
-  if (protectedRoutes.some(route => req.nextUrl.pathname === route)) {
+  // If trying to access a protected route and not authenticated, redirect to login
+  if (protectedRoutes.some(route => req.nextUrl.pathname.startsWith(route))) {
     if (!isAuthenticated) {
       const loginUrl = new URL('/login', req.url);
       return NextResponse.redirect(loginUrl);
     }
   }
 
-  // Allow access if authenticated or if accessing unprotected routes
+  // Allow access if authenticated or accessing an unprotected route
   return NextResponse.next();
 }
 
 export const config = {
-  // Define matcher to protect exact routes only
   matcher: [
-    '/', 
-    '/blogs', 
-    '/create-blog', 
-    '/create-category', 
-    '/all-categories'
+    '/dashboard/:path*', // Protect all dashboard-related routes
   ],
 };
