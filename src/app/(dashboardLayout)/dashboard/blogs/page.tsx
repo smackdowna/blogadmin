@@ -23,20 +23,6 @@ const Blogs = () => {
           </Link>
           </div>
 
-            {/* <div className="flex flex-col-reverse md:flex-row w-full items-center gap-6"> */}
-            {/* <div className="relative input-nav-flex w-full">
-            <Image
-              src={ICONS.searchIcon} 
-              alt="search-icon" 
-              className="size-6 absolute left-4 top-5 transform -translate-y-1/2"
-            />
-            <input 
-              type="text" 
-              placeholder="Search" 
-              className={`text-black bg-gray-50 border-primary-10 transition duration-300 focus:shadow pl-11 w-full max-w-full md:max-w-[300px] pr-4 py-2 rounded-lg focus:outline-none`}
-            />
-          </div> */}
-
           <Link href="/dashboard/create-blog" className={`bg-primary-10 hover:bg-primary-10/95 text-white rounded-lg px-4 py-2 font-semibold leading-[22px] hidden w-full md:w-[290px] md:flex items-center justify-center`}>
             Create New Blog
           </Link>
@@ -48,9 +34,12 @@ const Blogs = () => {
                 isLoading ?
                 <BlogCardLoader/>
                 :
+                allBlogs?.data?.length > 0 ?
                 allBlogs?.data?.map((blog:TBlog) => 
                   <BlogCard key={blog?._id} blog={blog} />
                 )
+                :
+                <p>No blogs found.</p>
               }
             </div>
         </div>

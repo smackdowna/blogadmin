@@ -1,4 +1,4 @@
-
+"use client"
 import LoginForm from './../../Components/LoginPageComponents/LoginForm';
 const Login = () => {
     return (

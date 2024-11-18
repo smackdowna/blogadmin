@@ -44,7 +44,7 @@ const Sidebar = () => {
   return (
     <div className="bg-white border-r w-[250px] p-4 h-screen sticky top-0 left-0 hidden xl:flex flex-col gap-[70px]">
       <Link
-        href={"/"}
+        href={"/dashboard"}
         className="text-primary-10 flex items-center gap-2 font-bold text-xl leading-[32px]"
       >
         <Image src={ICONS.blogLogo} className="size-7" alt="blog-logo" />

@@ -66,7 +66,7 @@ const CreateBlogForm = () => {
       {
         loading: 'Creating blog...',
         success: (response) => {
-          router.push('/blogs');
+          router.push('/dashboard/blogs');
           return response?.message || 'Blog created successfully!';
         },
         error: (err) => {
@@ -150,8 +150,8 @@ const CreateBlogForm = () => {
       {...register("category", { required: "Category is required" })}
     >
       <option value="">Select Category</option>
-      {allCategories?.map((cat: any) => (
-        <option key={cat.id} value={cat._id}>
+      {allCategories?.map((cat: any, index:number) => (
+        <option key={index} value={cat._id}>
           {cat.name}
         </option>
       ))}
