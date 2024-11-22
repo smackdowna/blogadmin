@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 import { FaSortDown } from "react-icons/fa";
 import { RxDashboard } from "react-icons/rx";
 import { RiBloggerLine } from "react-icons/ri";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
 import { FiLogOut } from "react-icons/fi";
 import { useRouter } from "next/navigation";
-import { useDispatch } from 'react-redux';
-import { logout } from '@/redux/features/Auth/authSlice';
-import { toast } from 'sonner';
-import Cookies from 'js-cookie';
+import { useDispatch } from "react-redux";
+import { logout } from "@/redux/features/Auth/authSlice";
+import { toast } from "sonner";
+import Cookies from "js-cookie";
 import Link from "next/link";
 
 type TUser = {
@@ -19,21 +19,35 @@ type TUser = {
   email: string;
 };
 
-const UserDropdown = ({user}:{user?:TUser | null}) => {
+const UserDropdown = ({ user }: { user?: TUser | null }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const dropDownRef = useRef<HTMLDivElement>(null);
 
   const dropdownLinks = [
-    { label: "Dashboard", href: "/dashboard", icon: <RxDashboard className="text-[1.3rem]" /> },
-    { label: "Blogs", href: "/dashboard/blogs", icon: <RiBloggerLine className="text-[1.3rem]" /> },
-    { label: "Create Blog", href: "/dashboard/create-blog", icon: <MdOutlineCreateNewFolder className="text-[1.3rem]" /> },
+    {
+      label: "Dashboard",
+      href: "/dashboard",
+      icon: <RxDashboard className="text-[1.3rem]" />,
+    },
+    {
+      label: "Blogs",
+      href: "/dashboard/blogs",
+      icon: <RiBloggerLine className="text-[1.3rem]" />,
+    },
+    {
+      label: "Create Blog",
+      href: "/dashboard/create-blog",
+      icon: <MdOutlineCreateNewFolder className="text-[1.3rem]" />,
+    },
   ];
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("https://blogbackend-theta.vercel.app/api/v1/admin/logout");
+      const response = await fetch(
+        "https://blogbackend-theta.vercel.app/api/v1/admin/logout"
+      );
 
       if (response.ok) {
         dispatch(logout());
@@ -51,7 +65,10 @@ const UserDropdown = ({user}:{user?:TUser | null}) => {
 
   useEffect(() => {
     const closeDropdown = (e: MouseEvent) => {
-      if (dropDownRef.current && !dropDownRef.current.contains(e.target as Node)) {
+      if (
+        dropDownRef.current &&
+        !dropDownRef.current.contains(e.target as Node)
+      ) {
         setOpen(false);
       }
     };
@@ -61,7 +78,6 @@ const UserDropdown = ({user}:{user?:TUser | null}) => {
       document.removeEventListener("mousedown", closeDropdown);
     };
   }, []);
-  
 
   return (
     <div ref={dropDownRef} className="relative w-fit text-white">
@@ -73,36 +89,45 @@ const UserDropdown = ({user}:{user?:TUser | null}) => {
         <FaSortDown className="leading-none text-start" />
       </button>
 
-      {
-        open &&
+      {open && (
         <ul className={` absolute top-12 z-50 w-full space-y-1 bg-white pb-1`}>
-        {dropdownLinks.map((item, idx) => (
-          <Link
-          onClick={() => setOpen(!open)}
-            key={idx}
-            href={item.href}
-            className={`rounded-sm px-4 py-[10px] ${open ? "opacity-100 duration-500" : "opacity-0 duration-150"} hover:bg-gray-50 text-neutral-20 flex items-center gap-3`}
-            style={{ transform: `translateY(${open ? 0 : (idx + 1) * 10}px)` }}
-          >
-            {item.icon}
-            {item.label}
-          </Link>
-        ))}
+          {dropdownLinks.map((item, idx) => (
+            <Link
+              onClick={() => setOpen(!open)}
+              key={idx}
+              href={item.href}
+              className={`rounded-sm px-4 py-[10px] ${
+                open ? "opacity-100 duration-500" : "opacity-0 duration-150"
+              } hover:bg-gray-50 text-neutral-20 flex items-center gap-3`}
+              style={{
+                transform: `translateY(${open ? 0 : (idx + 1) * 10}px)`,
+              }}
+            >
+              {item.icon}
+              {item.label}
+            </Link>
+          ))}
 
-        <li
-          className={`${open ? "opacity-100 duration-500" : "opacity-0 duration-150"}`}
-          style={{ transform: `translateY(${open ? 0 : (dropdownLinks.length + 1) * 10}px)` }}
-        >
-          <button
-            onClick={handleLogout}
-            className="rounded-sm px-4 py-[10px] w-full hover:bg-gray-50 text-neutral-20 flex items-center gap-3"
+          <li
+            className={`${
+              open ? "opacity-100 duration-500" : "opacity-0 duration-150"
+            }`}
+            style={{
+              transform: `translateY(${
+                open ? 0 : (dropdownLinks.length + 1) * 10
+              }px)`,
+            }}
           >
-            <FiLogOut className="text-[1.3rem]" />
-            Logout
-          </button>
-        </li>
-      </ul>
-      }
+            <button
+              onClick={handleLogout}
+              className="rounded-sm px-4 py-[10px] w-full hover:bg-gray-50 text-neutral-20 flex items-center gap-3"
+            >
+              <FiLogOut className="text-[1.3rem]" />
+              Logout
+            </button>
+          </li>
+        </ul>
+      )}
     </div>
   );
 };

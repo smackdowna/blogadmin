@@ -1,10 +1,12 @@
-"use client"
+"use client";
 // import Navbar from "@/Components/Navbar/Navbar";
 import Sidebar from "@/Components/Sidebar/Sidebar";
 import HamburgerMenu from "@/Components/Navbar/HamburgerMenu";
-import UserDropdown from '../../../Components/Navbar/UserDropdown';
-import dynamic from 'next/dynamic'
-const Navbar = dynamic(() => import('@/Components/Navbar/Navbar'), { ssr: false })
+import UserDropdown from "../../../Components/Navbar/UserDropdown";
+import dynamic from "next/dynamic";
+const Navbar = dynamic(() => import("@/Components/Navbar/Navbar"), {
+  ssr: false,
+});
 
 export default function DashboardLayout({
   children,
@@ -12,21 +14,17 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <div className="flex flex-col xl:flex-row bg-gray-50">
-        <Sidebar/>
-        <div className="flex items-center justify-between xl:hidden px-6 py-5">
-       <HamburgerMenu/>
-          <UserDropdown/>
-       </div>
-        
-
-        <div className="flex flex-col gap-5 w-full flex-1">
-          <Navbar/>
-        <div className="px-6 py-4">
-        {children}
-        </div>
-        </div>
-
+    <div className="flex flex-col xl:flex-row bg-gray-50">
+      <Sidebar />
+      <div className="flex items-center justify-between xl:hidden px-6 py-5">
+        <HamburgerMenu />
+        <UserDropdown />
       </div>
+
+      <div className="flex flex-col gap-5 w-full flex-1">
+        <Navbar />
+        <div className="px-6 py-4">{children}</div>
+      </div>
+    </div>
   );
 }

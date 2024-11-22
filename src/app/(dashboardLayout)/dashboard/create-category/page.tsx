@@ -16,39 +16,43 @@ type CreateCategoryFormInputs = {
 const CreateCategoryPage = () => {
   const [createCategory] = useCreateCategoryMutation();
   const router = useRouter();
-  const { register, handleSubmit, formState: { errors }, setValue } = useForm<CreateCategoryFormInputs>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm<CreateCategoryFormInputs>();
   const [subCategories, setSubCategories] = useState<string[]>([]);
   const [descriptions, setDescriptions] = useState<string[]>([]);
   const [bannerImage, setBannerImage] = useState<File | null>(null);
 
-  const handleCreateCategory: SubmitHandler<CreateCategoryFormInputs> = async (data) => {
+  const handleCreateCategory: SubmitHandler<CreateCategoryFormInputs> = async (
+    data
+  ) => {
     const formData = new FormData();
     formData.append("category", data.category);
-    // formData.append("subCategory", JSON.stringify(subCategories));
-    formData.append("description", JSON.stringify(descriptions));
     if (bannerImage) formData.append("file", bannerImage);
 
-
+    // Appending the subcategories
     for (const subCategory of subCategories) {
       formData.append("subCategory", subCategory);
     }
+    // Appending the descriptions
+    for (const description of descriptions) {
+      formData.append(`description`, description);
+    }
 
-    console.log(formData.get("subCategory"))
-
-    toast.promise(
-      createCategory(formData).unwrap(),
-      {
-        loading: 'Creating category...',
-        success: (response) => {
-          router.push('/dashboard/all-categories');
-          return response?.message || 'Category created successfully!';
-        },
-        error: (err) => {
-          console.error('Error creating category:', err);
-          return 'Failed to create category.';
-        },
-      }
-    );
+    toast.promise(createCategory(formData).unwrap(), {
+      loading: "Creating category...",
+      success: (response) => {
+        router.push("/dashboard/all-categories");
+        return response?.message || "Category created successfully!";
+      },
+      error: (err) => {
+        console.error("Error creating category:", err);
+        return "Failed to create category.";
+      },
+    });
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -63,7 +67,9 @@ const CreateCategoryPage = () => {
     }
   };
 
-  const handleDescriptionKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+  const handleDescriptionKeyDown = (
+    e: React.KeyboardEvent<HTMLTextAreaElement>
+  ) => {
     if (e.key === "Enter" && e.currentTarget.value.trim() !== "") {
       e.preventDefault();
       const newDescription = e.currentTarget.value.trim();
@@ -92,9 +98,17 @@ const CreateCategoryPage = () => {
       </h1>
 
       <div className="w-full space-y-7 rounded-lg border bg-white p-7 sm:p-10 mt-7">
-        <form onSubmit={handleSubmit(handleCreateCategory)} className="flex flex-col gap-5 max-w-[500px] mx-auto">
+        <form
+          onSubmit={handleSubmit(handleCreateCategory)}
+          className="flex flex-col gap-5 max-w-[500px] mx-auto"
+        >
           <div className="space-y-2 text-sm">
-            <label htmlFor="category" className="block text-zinc-700 font-medium">Category</label>
+            <label
+              htmlFor="category"
+              className="block text-zinc-700 font-medium"
+            >
+              Category
+            </label>
             <input
               className="flex h-10 w-full rounded-md border px-3 py-2 text-sm focus:outline-none focus:border-primary-10 transition duration-300 focus:shadow"
               id="category"
@@ -102,11 +116,18 @@ const CreateCategoryPage = () => {
               type="text"
               {...register("category", { required: "Category is required" })}
             />
-            {errors.category && <p className="text-red-500 text-xs">{errors.category.message}</p>}
+            {errors.category && (
+              <p className="text-red-500 text-xs">{errors.category.message}</p>
+            )}
           </div>
 
           <div className="space-y-2 text-sm">
-            <label htmlFor="subCategory" className="block text-zinc-700 font-medium">Sub Category</label>
+            <label
+              htmlFor="subCategory"
+              className="block text-zinc-700 font-medium"
+            >
+              Sub Category
+            </label>
             <input
               className="flex h-10 w-full rounded-md border px-3 py-2 text-sm focus:outline-none focus:border-primary-10 transition duration-300 focus:shadow"
               id="subCategory"
@@ -116,27 +137,45 @@ const CreateCategoryPage = () => {
             />
             <div className="mt-2 flex flex-wrap gap-2">
               {subCategories.map((subCategory, index) => (
-                <div key={index} className="flex items-center gap-2 bg-white rounded-xl border px-3 py-1 text-sm text-black">
+                <div
+                  key={index}
+                  className="flex items-center gap-2 bg-white rounded-xl border px-3 py-1 text-sm text-black"
+                >
                   <span>{subCategory}</span>
-                  <AiOutlineClose className="cursor-pointer text-red-500" onClick={() => removeTag(index)} />
+                  <AiOutlineClose
+                    className="cursor-pointer text-red-500"
+                    onClick={() => removeTag(index)}
+                  />
                 </div>
               ))}
             </div>
           </div>
 
           <div className="space-y-2 text-sm">
-            <label htmlFor="bannerImage" className="block text-zinc-700 font-medium">Banner Image</label>
+            <label
+              htmlFor="bannerImage"
+              className="block text-zinc-700 font-medium"
+            >
+              Banner Image
+            </label>
             <input
               className="flex w-full rounded-md border px-3 py-2 text-sm focus:outline-none focus:border-primary-10 transition duration-300 focus:shadow"
               id="bannerImage"
               type="file"
               accept="image/*"
-              onChange={(e) => setBannerImage(e.target.files ? e.target.files[0] : null)}
+              onChange={(e) =>
+                setBannerImage(e.target.files ? e.target.files[0] : null)
+              }
             />
           </div>
 
           <div className="space-y-2 text-sm">
-            <label htmlFor="description" className="block text-zinc-700 font-medium">Description</label>
+            <label
+              htmlFor="description"
+              className="block text-zinc-700 font-medium"
+            >
+              Description
+            </label>
             <textarea
               className="flex h-20 w-full rounded-md border px-3 py-2 text-sm focus:outline-none focus:border-primary-10 transition duration-300 focus:shadow"
               id="description"
@@ -145,16 +184,27 @@ const CreateCategoryPage = () => {
             />
             <div className="mt-2 flex flex-wrap gap-2">
               {descriptions.map((description, index) => (
-                <div key={index} className="flex items-center gap-2 bg-white rounded-xl border px-3 py-1 text-sm text-black relative">
+                <div
+                  key={index}
+                  className="flex items-center gap-2 bg-white rounded-xl border px-3 py-1 text-sm text-black relative"
+                >
                   <span>{description}</span>
-                  <AiOutlineClose className=" absolute top-2 right-2 cursor-pointer text-red-500" onClick={() => removeDescription(index)} />
+                  <AiOutlineClose
+                    className=" absolute top-2 right-2 cursor-pointer text-red-500"
+                    onClick={() => removeDescription(index)}
+                  />
                 </div>
               ))}
             </div>
           </div>
 
           <div className="flex justify-end">
-            <button type="submit" className="rounded-md bg-primary-10 px-5 py-2 text-white transition-colors hover:bg-primary-10/95">Submit</button>
+            <button
+              type="submit"
+              className="rounded-md bg-primary-10 px-5 py-2 text-white transition-colors hover:bg-primary-10/95"
+            >
+              Submit
+            </button>
           </div>
         </form>
       </div>
