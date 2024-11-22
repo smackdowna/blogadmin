@@ -39,8 +39,7 @@ export const sidebarLinks = [
 
 const Sidebar = () => {
   const pathname = usePathname();
-  console.log(pathname);
-  
+
   return (
     <div className="bg-white border-r w-[250px] p-4 h-screen sticky top-0 left-0 hidden xl:flex flex-col gap-[70px]">
       <Link

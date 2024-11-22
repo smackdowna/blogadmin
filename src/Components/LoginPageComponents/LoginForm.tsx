@@ -1,12 +1,11 @@
-"use client"
+"use client";
 import { useLoginMutation } from "@/redux/features/Auth/authApi";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { toast } from 'sonner'
-import { useDispatch } from 'react-redux';
+import { toast } from "sonner";
+import { useDispatch } from "react-redux";
 import { setUser } from "@/redux/features/Auth/authSlice";
-import Cookies from 'js-cookie';
-
+import Cookies from "js-cookie";
 
 type LoginFormInputs = {
   email: string;
@@ -16,30 +15,34 @@ type LoginFormInputs = {
 const LoginForm = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const [login, {isLoading}] = useLoginMutation();
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginFormInputs>();
+  const [login, { isLoading }] = useLoginMutation();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormInputs>();
 
   const handleLogin: SubmitHandler<LoginFormInputs> = async (data) => {
     const loginData = {
       email: data.email,
       password: data.password,
     };
-    try{
+    try {
       const response = await login(loginData).unwrap();
-        if (response) {
-          dispatch(setUser({ user: response.user }));
-          Cookies.set('isAuthenticated', 'true');
-          toast.success("Welcome Back!!");
-        }
-      
+      if (response) {
+        dispatch(setUser({ user: response.user }));
+        Cookies.set("isAuthenticated", "true");
+        toast.success("Welcome Back!!");
+      }
+
       // dispatch(setUser({ user:response.user}));
       // Cookies.set('isAuthenticated', 'true');
       //  toast.success("Welcome Back!!")
-       router.push("/dashboard");
-   } catch(err){
-       console.log(err)
-       // err
-   }
+      router.push("/dashboard");
+    } catch (err) {
+      console.log(err);
+      // err
+    }
   };
 
   return (
@@ -48,7 +51,10 @@ const LoginForm = () => {
 
       <form onSubmit={handleSubmit(handleLogin)} className="space-y-4">
         <div className="space-y-2 text-sm">
-          <label htmlFor="email" className="block text-zinc-700 dark:text-zinc-300 font-medium">
+          <label
+            htmlFor="email"
+            className="block text-zinc-700 dark:text-zinc-300 font-medium"
+          >
             Email
           </label>
           <input
@@ -58,11 +64,16 @@ const LoginForm = () => {
             type="email"
             {...register("email", { required: "Email is required" })}
           />
-          {errors.email && <p className="text-red-500 text-xs">{errors.email.message}</p>}
+          {errors.email && (
+            <p className="text-red-500 text-xs">{errors.email.message}</p>
+          )}
         </div>
 
         <div className="space-y-2 text-sm">
-          <label htmlFor="password" className="block text-zinc-700 dark:text-zinc-300 font-medium">
+          <label
+            htmlFor="password"
+            className="block text-zinc-700 dark:text-zinc-300 font-medium"
+          >
             Password
           </label>
           <input
@@ -72,7 +83,9 @@ const LoginForm = () => {
             type="password"
             {...register("password", { required: "Password is required" })}
           />
-          {errors.password && <p className="text-red-500 text-xs">{errors.password.message}</p>}
+          {errors.password && (
+            <p className="text-red-500 text-xs">{errors.password.message}</p>
+          )}
         </div>
 
         <div className="flex justify-end">
@@ -80,12 +93,7 @@ const LoginForm = () => {
             type="submit"
             className="rounded-md bg-primary-10 px-5 py-2 text-white transition-colors hover:bg-primary-10/95"
           >
-            {
-                isLoading ? 
-                "Login in..."
-                :
-                "Login"
-            }
+            {isLoading ? "Login in..." : "Login"}
           </button>
         </div>
       </form>
