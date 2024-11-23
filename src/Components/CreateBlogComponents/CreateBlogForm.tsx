@@ -55,10 +55,13 @@ const CreateBlogForm = () => {
     data
   ) => {
     const formData = new FormData();
-    formData.append("title", JSON.stringify(data.title));
-    formData.append("metaDescription", JSON.stringify(data.metadata));
-    formData.append("content", JSON.stringify(content));
-    formData.append("tags", JSON.stringify(tags));
+    formData.append("title", data.title);
+    formData.append("metaDescription", data.metadata);
+    formData.append("content", content);
+    // formData.append("tags", JSON.stringify(tags));
+    tags.map((tag, index) => {
+      formData.append(`tags[${index}]`, tag)
+    })
     formData.append("category", data.category);
     formData.append("subCategory", data.subCategory);
 
