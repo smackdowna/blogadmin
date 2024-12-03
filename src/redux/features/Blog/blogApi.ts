@@ -22,6 +22,7 @@ const blogApi = baseApi.injectEndpoints({
 
     editBlog: builder.mutation({
       query: ({ id, formData }) => {
+        console.log("Editing blog with ID:", id);
         return {
           url: `/blog/${id}`,
           method: "PUT",
@@ -30,6 +31,7 @@ const blogApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["blogs"],
     }),
+    
 
 
     createBlog: builder.mutation({
