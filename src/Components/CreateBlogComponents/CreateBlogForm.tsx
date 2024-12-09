@@ -58,10 +58,10 @@ const CreateBlogForm = () => {
     formData.append("title", data.title);
     formData.append("metaDescription", data.metadata);
     formData.append("content", content);
-    // formData.append("tags", JSON.stringify(tags));
     tags.map((tag, index) => {
       formData.append(`tags[${index}]`, tag)
     })
+
     formData.append("category", data.category);
     formData.append("subCategory", data.subCategory);
 
@@ -70,7 +70,7 @@ const CreateBlogForm = () => {
     }
 
     // console.log(formData.get('file'))
-    // console.log(formData.get('tags'))
+    console.log(formData.get('tags'))
 
     toast.promise(createBlog(formData).unwrap(), {
       loading: "Creating blog...",

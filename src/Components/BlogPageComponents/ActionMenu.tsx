@@ -66,6 +66,7 @@ const ActionMenu = ({ blog }: { blog: TBlog }) => {
         </div>
       )}
 
+      {/* Modal for delete blog */}
       <Modal
         openModal={openDeleteConfirmModal}
         setOpenModal={setOpenDeleteConfirmModal}
@@ -102,10 +103,11 @@ const ActionMenu = ({ blog }: { blog: TBlog }) => {
         </div>
       </Modal>
 
+      {/* Modal for edit blog */}
       <Modal
         openModal={openEditBlogModal}
         setOpenModal={setOpenEditBlogModal}
-        classNames="w-full max-w-[450px] h-[500px] p-5"
+        classNames="w-full max-w-[1000px] h-[500px] p-5"
       >
         <EditBlogModal
           setOpenEditBlogModal={setOpenEditBlogModal}

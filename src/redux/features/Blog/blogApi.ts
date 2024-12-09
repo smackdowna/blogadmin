@@ -5,12 +5,14 @@ const blogApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
 
     getAllBlogs: builder.query({
-      query: () => ({
-        url: "/blog",
+      query: ({ title }) => ({
+        url: `/blog`,
         method: "GET",
+        params: { title },
       }),
-      providesTags: ["blogs"]
+      providesTags: ["blogs"],
     }),
+    
 
     getBlogById: builder.query({
       query: (id) => ({
