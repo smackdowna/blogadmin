@@ -3,7 +3,10 @@ export type TBlog = {
     title: string;
     metaDescription: string;
     content: string;
-    category: string;
+    category: {
+      _id : string;
+      name:string;
+    };
     tags: string[];
     thumbnail: {
       fileId: string;

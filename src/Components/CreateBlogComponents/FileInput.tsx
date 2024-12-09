@@ -29,7 +29,7 @@ const FileInput: React.FC<FileInputProps> = ({ onFileSelect }) => {
   };
 
   return (
-    <div className="">
+    <div className="mt-5">
       {showName ? (
         <div className="mx-auto flex max-w-[600px] items-center gap-x-6 rounded-lg border-2 border-dashed border-gray-400 p-5 bg-white">
           <Image

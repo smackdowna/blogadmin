@@ -5,12 +5,14 @@ const blogApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
 
     getAllBlogs: builder.query({
-      query: () => ({
-        url: "/blog",
+      query: ({ title }) => ({
+        url: `/blog`,
         method: "GET",
+        params: { title },
       }),
-      providesTags: ["blogs"]
+      providesTags: ["blogs"],
     }),
+    
 
     getBlogById: builder.query({
       query: (id) => ({
@@ -22,6 +24,7 @@ const blogApi = baseApi.injectEndpoints({
 
     editBlog: builder.mutation({
       query: ({ id, formData }) => {
+        console.log("Editing blog with ID:", id);
         return {
           url: `/blog/${id}`,
           method: "PUT",
@@ -30,6 +33,7 @@ const blogApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["blogs"],
     }),
+    
 
 
     createBlog: builder.mutation({

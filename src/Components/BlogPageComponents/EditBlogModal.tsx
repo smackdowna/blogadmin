@@ -16,7 +16,10 @@ type TEditBlog = {
   title: string;
   metadata: string;
   tags: string[];
-  category: string;
+  category: {
+    _id : string;
+    name:string;
+  };
 };
 
 type TEditBlogModalProps = {
@@ -46,33 +49,40 @@ const EditBlogModal : React.FC<TEditBlogModalProps> = ({ setOpenEditBlogModal, b
 
   const [editBlog] = useEditBlogMutation();
 
-const handleEditBlog: SubmitHandler<TEditBlog> = async (data) => {
-  const formData = new FormData();
-  formData.append("title", JSON.stringify(data.title));
-  formData.append("metaDescription", JSON.stringify(data.metadata));
-  formData.append("content", JSON.stringify(content));
-  formData.append("category", JSON.stringify(data.category));
-  formData.append("tags", JSON.stringify(tags));
+  const handleEditBlog: SubmitHandler<TEditBlog> = async (data) => {
+    const formData = new FormData();
+    formData.append("title", data.title);
+    formData.append("metaDescription", data.metadata);
+    formData.append("content", content);
+    // formData.append("tags", JSON.stringify(tags));
+    tags.map((tag, index) => {
+      formData.append(`tags[${index}]`, tag)
+    })
+    // formData.append("category", data.category);
+    // formData.append("subCategory", data.subCategory);
 
-  if (selectedFile) {
-    formData.append("file", selectedFile);
-  }
-
-  toast.promise(
-    editBlog({ id: blog?._id, formData }).unwrap(),
-    {
-      loading: 'Updating blog...',
-      success: (response) => {
-        setOpenEditBlogModal(false);
-        return response?.message || 'Blog updated successfully!';
-      },
-      error: (err) => {
-        console.error('Error updating blog:', err);
-        return 'Failed to update blog.';
-      },
+    if (selectedFile) {
+      formData.append("file", selectedFile);
     }
-  );
-};
+
+    const id = blog?._id
+  
+    toast.promise(
+      editBlog({ id, formData }).unwrap(),
+      {
+        loading: 'Updating blog...',
+        success: (response) => {
+          setOpenEditBlogModal(false);
+          return response?.message || 'Blog updated successfully!';
+        },
+        error: (err) => {
+          console.error('Error updating blog:', err);
+          return 'Failed to update blog.';
+        },
+      }
+    );
+  };
+  
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && e.currentTarget.value.trim() !== "") {
@@ -146,7 +156,7 @@ const handleEditBlog: SubmitHandler<TEditBlog> = async (data) => {
         <div className="space-y-2 text-sm">
           <label htmlFor="category" className="block text-zinc-700 font-medium">Category</label>
           <input
-            defaultValue={blog?.category}
+            defaultValue={blog?.category?.name}
             className="flex h-10 w-full rounded-md border px-3 py-2 text-sm focus:outline-none focus:border-primary-10 transition duration-300 focus:shadow"
             id="category"
             placeholder="Enter category"
