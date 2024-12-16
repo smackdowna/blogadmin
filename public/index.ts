@@ -1,4 +1,5 @@
 import blogLogo from "../public/icons/blog-logo.svg";
+import blogLogo2 from "../public/icons/Logo another color.svg";
 import searchIcon from "../public/icons/searchBlue.svg";
 import menu from "../public/icons/menu.svg";
 
@@ -8,6 +9,7 @@ import profileImg from "../public/images/profileImg.png";
 
 export const ICONS = {
     blogLogo,
+    blogLogo2,
     searchIcon,
     menu,
 }
