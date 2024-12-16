@@ -46,7 +46,7 @@ const Sidebar = () => {
         href={"/dashboard"}
         className="text-primary-10 flex items-center gap-2 font-bold text-xl leading-[32px]"
       >
-        <Image src={ICONS.blogLogo} className="size-7" alt="blog-logo" />
+        <Image src={ICONS.blogLogo2} className="size-16" alt="blog-logo"  />
         Blog
       </Link>
 
